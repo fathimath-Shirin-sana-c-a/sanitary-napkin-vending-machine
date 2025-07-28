@@ -3,13 +3,13 @@ The system allows users to purchase sanitary napkins by inserting cash (coins or
 
 This repository will include:
 
-Java source code
+•Java source code
 
-File handling logic for storing inventory and transaction data
+•File handling logic for storing inventory and transaction data
 
-Design documents (abstract, use case diagram, etc.)
+•Design documents (abstract, use case diagram, etc.)
 
-User manual and test cases
+•User manual and test cases
 
 
 The project will use Git and GitHub for version control and collaboration.
