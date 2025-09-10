@@ -27,6 +27,19 @@ public class UserPanel {
         buttonPanel.add(btn20);
 
         frame.add(buttonPanel);
+        JLabel totalLabel = new JLabel("Total Inserted: ₹0", SwingConstants.CENTER);
+        frame.add(totalLabel);
+
+        final int[] total = {0};
+
+        btn1.addActionListener(e -> { total[0] += 1; totalLabel.setText("Total Inserted: ₹" + total[0]); });
+        btn2.addActionListener(e -> { total[0] += 2; totalLabel.setText("Total Inserted: ₹" + total[0]); });
+        btn5.addActionListener(e -> { total[0] += 5; totalLabel.setText("Total Inserted: ₹" + total[0]); });
+        btn10.addActionListener(e -> { total[0] += 10; totalLabel.setText("Total Inserted: ₹" + total[0]); });
+        btn20.addActionListener(e -> { total[0] += 20; totalLabel.setText("Total Inserted: ₹" + total[0]); });
+
+
+
 
         frame.setVisible(true);
     }
