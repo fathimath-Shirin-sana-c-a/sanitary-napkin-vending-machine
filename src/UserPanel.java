@@ -38,8 +38,18 @@ public class UserPanel {
         btn10.addActionListener(e -> { total[0] += 10; totalLabel.setText("Total Inserted: ₹" + total[0]); });
         btn20.addActionListener(e -> { total[0] += 20; totalLabel.setText("Total Inserted: ₹" + total[0]); });
 
+        JButton getNapkinBtn = new JButton("Get Napkin");
+        frame.add(getNapkinBtn);
 
-
+        getNapkinBtn.addActionListener(e -> {
+            if (total[0] >= 5) {
+                JOptionPane.showMessageDialog(frame, "Napkin Dispensed!");
+                total[0] -= 5; // reduce balance
+                totalLabel.setText("Total Inserted: ₹" + total[0]);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Insert at least ₹5 to get a napkin.");
+            }
+        });
 
         frame.setVisible(true);
     }
