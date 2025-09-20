@@ -1,7 +1,7 @@
 package admin;
+import db.DBHelper;
+...
 
-import javax.swing.*;
-import java.awt.*;
 
 public class RefillScreen {
     JFrame frame;
@@ -12,17 +12,18 @@ public class RefillScreen {
         frame = new JFrame("Refill Items");
         frame.setSize(400, 400);
         frame.setLayout(new GridLayout(8, 2));
-
-        JLabel napkinLabel = new JLabel("Napkin Stock: " + napkinStock);
+        JLabel napkinLabel = new JLabel("Napkin Stock: " + DBHelper.getNapkinStock());
         JButton addNapkins = new JButton("Add Napkins");
         addNapkins.addActionListener(e -> {
             String input = JOptionPane.showInputDialog("Enter number of napkins to add:");
             if (input != null) {
-                napkinStock += Integer.parseInt(input);
-                napkinLabel.setText("Napkin Stock: " + napkinStock);
+                int added = Integer.parseInt(input);
+                int newStock = DBHelper.getNapkinStock() + added;
+                DBHelper.updateNapkinStock(newStock);
+                napkinLabel.setText("Napkin Stock: " + newStock);
             }
         });
-
+        
         JLabel oneLabel = new JLabel("₹1 Coins: " + coins1);
         JButton addOne = new JButton("Add ₹1");
         addOne.addActionListener(e -> {
