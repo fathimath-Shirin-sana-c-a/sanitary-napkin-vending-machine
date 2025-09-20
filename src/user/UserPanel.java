@@ -1,5 +1,7 @@
-import javax.swing.*;
+package user;
 
+import javax.swing.*;
+import admin.AdminLogin;
 public class UserPanel {
     JFrame frame;
     JLabel title;
