@@ -1,6 +1,8 @@
 package user;
 
-import javax.swing.*;
+import db.DBHelper;
+
+
 import admin.AdminLogin;
 public class UserPanel {
     JFrame frame;
@@ -48,10 +50,14 @@ public class UserPanel {
         frame.add(adminBtn);
 
         getNapkinBtn.addActionListener(e -> {
-            if (total[0] >= 5) {
+            int stock = DBHelper.getNapkinStock();
+            if (stock > 0 && total[0] >= 5) {
                 JOptionPane.showMessageDialog(frame, "Napkin Dispensed!");
-                total[0] -= 5; // reduce balance
+                DBHelper.updateNapkinStock(stock - 1);
+                total[0] -= 5;
                 totalLabel.setText("Total Inserted: ₹" + total[0]);
+            } else if (stock <= 0) {
+                JOptionPane.showMessageDialog(frame, "Out of stock! Please contact admin.");
             } else {
                 JOptionPane.showMessageDialog(frame, "Insert at least ₹5 to get a napkin.");
             }
