@@ -41,6 +41,10 @@ public class UserPanel {
         JButton getNapkinBtn = new JButton("Get Napkin");
         frame.add(getNapkinBtn);
 
+        JButton adminBtn = new JButton("Admin Login");
+        adminBtn.addActionListener(e -> new AdminLogin());
+        frame.add(adminBtn);
+
         getNapkinBtn.addActionListener(e -> {
             if (total[0] >= 5) {
                 JOptionPane.showMessageDialog(frame, "Napkin Dispensed!");
