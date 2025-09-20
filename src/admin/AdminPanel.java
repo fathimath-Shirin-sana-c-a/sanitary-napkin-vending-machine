@@ -1,3 +1,7 @@
+package admin;
+
+import user.UserPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
