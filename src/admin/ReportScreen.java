@@ -3,41 +3,35 @@ package admin;
 import javax.swing.*;
 import java.awt.*;
 
+import db.DBHelper;
+
 public class ReportScreen {
     JFrame frame;
 
-    // Sample data (will be from DB in Day 4)
-    private static int todayNapkins = 3;
-    private static int todayAmount = 15;
-    private static int totalNapkins = 25;
-    private static int totalAmount = 125;
-
     public ReportScreen() {
         frame = new JFrame("Reports");
-        frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(6, 1));
+        frame.setSize(400, 250);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(new java.awt.GridLayout(5, 1));
 
-        JLabel todayLabel = new JLabel("Today's Report:");
-        JLabel napkinsToday = new JLabel("Napkins Sold: " + todayNapkins);
-        JLabel amountToday = new JLabel("Amount Collected: ₹" + todayAmount);
+        // ✅ Labels for today's report
+        JLabel todaySales = new JLabel("Today's Sales: " + DBHelper.getTodaySales(), SwingConstants.CENTER);
+        JLabel todayRevenue = new JLabel("Today's Revenue: ₹" + DBHelper.getTodayRevenue(), SwingConstants.CENTER);
 
-        JLabel allTimeLabel = new JLabel("All-Time Report:");
-        JLabel napkinsTotal = new JLabel("Total Napkins Sold: " + totalNapkins);
-        JLabel amountTotal = new JLabel("Total Amount Collected: ₹" + totalAmount);
+        // ✅ Labels for all-time report
+        JLabel totalSales = new JLabel("All-time Sales: " + DBHelper.getTotalSales(), SwingConstants.CENTER);
+        JLabel totalRevenue = new JLabel("All-time Revenue: ₹" + DBHelper.getTotalRevenue(), SwingConstants.CENTER);
 
-        JButton backBtn = new JButton("Back to Admin Panel");
-        backBtn.addActionListener(e -> {
-            new AdminPanel();
-            frame.dispose();
-        });
+        // ✅ Close button
+        JButton closeBtn = new JButton("Close");
+        closeBtn.addActionListener(e -> frame.dispose());
 
-        frame.add(todayLabel);
-        frame.add(napkinsToday);
-        frame.add(amountToday);
-        frame.add(allTimeLabel);
-        frame.add(napkinsTotal);
-        frame.add(amountTotal);
-        frame.add(backBtn);
+        // Add all components
+        frame.add(todaySales);
+        frame.add(todayRevenue);
+        frame.add(totalSales);
+        frame.add(totalRevenue);
+        frame.add(closeBtn);
 
         frame.setVisible(true);
     }
