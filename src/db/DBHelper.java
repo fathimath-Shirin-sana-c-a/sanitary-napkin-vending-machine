@@ -157,4 +157,25 @@ public class DBHelper {
         } catch (Exception e) { e.printStackTrace(); }
         return "—";
     }
+    // Get coin quantity by denomination
+
+
+
+    // Update coin quantity
+    
+    // Insert coins when user pays
+    public static void insertCoin(int denom) {
+        int current = getCoinQuantity(denom);
+        updateCoinQuantity(denom, current + 1);
+    }
+
+    // Deduct coins when returning change
+    public static boolean deductCoin(int denom, int qty) {
+        int current = getCoinQuantity(denom);
+        if (current >= qty) {
+            updateCoinQuantity(denom, current - qty);
+            return true;
+        }
+        return false; // not enough coins
+    }
 }

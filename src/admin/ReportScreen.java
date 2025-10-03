@@ -9,8 +9,8 @@ public class ReportScreen {
 
     public ReportScreen() {
         frame = new JFrame("Reports");
-        frame.setSize(420, 260);
-        frame.setLayout(new GridLayout(8, 1));
+        frame.setSize(400, 400);
+        frame.setLayout(new GridLayout(5, 2));
 
         JLabel todayLabel      = new JLabel("Today's Report:");
         JLabel napkinsToday    = new JLabel("Napkins Sold: " + DBHelper.getTodaySales());

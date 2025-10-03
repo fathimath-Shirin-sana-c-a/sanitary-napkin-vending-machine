@@ -31,11 +31,11 @@ public class UserPanel {
 
         totalLabel = new JLabel("Total Inserted: ₹0", SwingConstants.CENTER);
 
-        btn1.addActionListener(e -> onInsertCoin(1));
-        btn2.addActionListener(e -> onInsertCoin(2));
-        btn5.addActionListener(e -> onInsertCoin(5));
-        btn10.addActionListener(e -> onInsertCoin(10));
-        btn20.addActionListener(e -> onInsertCoin(20));
+        btn1.addActionListener(e -> { updateTotal(1); DBHelper.insertCoin(1); });
+        btn2.addActionListener(e -> { updateTotal(2); DBHelper.insertCoin(2); });
+        btn5.addActionListener(e -> { updateTotal(5); DBHelper.insertCoin(5); });
+        btn10.addActionListener(e -> { updateTotal(10); DBHelper.insertCoin(10); });
+        btn20.addActionListener(e -> { updateTotal(20); DBHelper.insertCoin(20); });
 
         JButton getNapkinBtn = new JButton("Get Napkin");
         getNapkinBtn.addActionListener(e -> getNapkin());
@@ -64,15 +64,45 @@ public class UserPanel {
     private void getNapkin() {
         int stock = DBHelper.getNapkinStock();
         if (stock > 0 && total >= 5) {
-            JOptionPane.showMessageDialog(frame, "Napkin Dispensed!");
-            DBHelper.updateNapkinStock(stock - 1);
-            DBHelper.insertTransaction(1, 5); // for reports
-            total -= 5;
-            totalLabel.setText("Total Inserted: ₹" + total);
+            int change = total - 5;
+
+            // Try returning change
+            if (canReturnChange(change)) {
+                JOptionPane.showMessageDialog(frame, "Napkin Dispensed! Returning ₹" + change + " as change.");
+                DBHelper.updateNapkinStock(stock - 1);
+                DBHelper.insertTransaction(1,5);
+                total = 0; // reset balance after purchase
+                totalLabel.setText("Total Inserted: ₹" + total);
+            } else if (change == 0) {
+                JOptionPane.showMessageDialog(frame, "Napkin Dispensed!");
+                DBHelper.updateNapkinStock(stock - 1);
+                DBHelper.insertTransaction(1,5);
+                total = 0;
+                totalLabel.setText("Total Inserted: ₹" + total);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please insert exact amount. Cannot return ₹" + change + " change.");
+            }
+
         } else if (stock <= 0) {
             JOptionPane.showMessageDialog(frame, "Out of stock! Please contact admin.");
         } else {
             JOptionPane.showMessageDialog(frame, "Insert at least ₹5 to get a napkin.");
         }
+    }
+    private boolean canReturnChange(int change) {
+        int[] denoms = {20, 10, 5, 2, 1};
+
+        for (int d : denoms) {
+            while (change >= d && DBHelper.getCoinQuantity(d) > 0) {
+                if (DBHelper.deductCoin(d, 1)) {
+                    change -= d;
+                }
+            }
+        }
+        return change == 0; // true if exact change given
+    }
+    private void updateTotal(int amount) {
+        total += amount;  // total is the variable tracking inserted money
+        totalLabel.setText("Total Inserted: ₹" + total);
     }
 }
